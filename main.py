@@ -38,8 +38,8 @@ loyalty = df_with_fav.withColumn("is_fav_genre", (col("genre") == col("fav_genre
                      .groupBy("user_id") \
                      .agg(avg("is_fav_genre").alias("loyalty_score"))
 
-# Filter users with loyalty score > 0.8
-loyal_users = loyalty.filter(col("loyalty_score") > 0.8)
+# Filter users with loyalty score <= 0.75
+loyal_users = loyalty.filter(col("loyalty_score") <= 0.75)
 loyal_users.show(10)
 
 loyal_users.write.mode("overwrite").format("csv").option("header", "true").save("output/genre_loyalty_scores")
